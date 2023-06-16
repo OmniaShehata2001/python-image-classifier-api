@@ -8,6 +8,8 @@ import torchvision.transforms as transforms
 from PIL import Image
 import torchvision.transforms as T
 import torchvision
+from flask_cors import CORS, cross_origin
+
 
 # Replace this with your own classification function
 
@@ -49,8 +51,11 @@ def classify_image(image):
 
 app = Flask(__name__)
 
+
 @app.route('/classify', methods=['POST'])
+@cross_origin(origin='*',headers=['Content-Type'])
 def classify():
+    print(request)
     # Receive base64 encoded image from the request
     image_data = request.json.get('image')
     image_bytes = base64.b64decode(image_data)
